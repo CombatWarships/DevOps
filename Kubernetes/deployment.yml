@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warshipssearchapi
+  labels:
+    app: warshipssearchapi
+spec:
+#   replicas: 1
+   selector:
+     matchLabels:
+       app: warshipssearchapi
+   template:
+     metadata:
+       labels:
+         app: warshipssearchapi
+         service: warshipssearchapi
+     spec:
+       containers:
+         - name: warshipssearchapi
+           image: warshipregistry.azurecr.io/__IMAGE_NAME__:__IMAGE_TAG__
+           imagePullPolicy: Always
+           ports:
+             - containerPort: 80
+             - containerPort: 443
+               # protocol: TCP
+#           env:
+#             - name: ASPNETCORE_URLS
+#               value: http://+:80
+#             - name: WebApiBaseAddress
+#               value: http://warshipssearchapi
