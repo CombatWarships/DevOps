@@ -75,8 +75,8 @@ jobs:
       - name: Checkout Kubernetes files
         uses: actions/checkout@v4
         with:
-          repository: CombatWarships/DevOps/Kubernetes
-          path: Kubernetes
+          repository: CombatWarships/DevOps
+          path: DevOps
       
       # Logs in with your Azure credentials
       - name: Azure login
@@ -96,7 +96,7 @@ jobs:
       - name: Update K8 variables 
         uses: cschleiden/replace-tokens@v1
         with:
-          files: '["Kubernetes/*.yml"]'
+          files: '["DevOps/Kubernetes/*.yml"]'
           tokenPrefix: __
           tokenSuffix: __
         env:
@@ -118,8 +118,8 @@ jobs:
         with:
           action: deploy
           manifests: |
-            Kubernetes/deployment.yml
-            Kubernetes/service.yml
+            DevOps/Kubernetes/deployment.yml
+            DevOps/Kubernetes/service.yml
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
 
