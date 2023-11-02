@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: warshipssearchapi
+  name: __IMAGE_NAME__
   labels:
-    app: warshipssearchapi
+    app: __IMAGE_NAME__
 spec:
 #   replicas: 1
    selector:
      matchLabels:
-       app: warshipssearchapi
+       app: __IMAGE_NAME__
    template:
      metadata:
        labels:
-         app: warshipssearchapi
-         service: warshipssearchapi
+         app: __IMAGE_NAME__
+         service: __IMAGE_NAME__
      spec:
        containers:
-         - name: warshipssearchapi
+         - name: __IMAGE_NAME__
            image: warshipregistry.azurecr.io/__IMAGE_NAME__:__IMAGE_TAG__
            imagePullPolicy: Always
            ports:
