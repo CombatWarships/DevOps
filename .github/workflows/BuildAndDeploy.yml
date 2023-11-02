@@ -35,8 +35,14 @@ jobs:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
 
-      #substitute production appsettings entries to appsettings json file
+      - name: Check for APPSETTINGS existance
+        id: check_appsettings
+        uses: thebinaryfelix/check-file-existence-action@v1
+        with:
+          files: ${{ env.APPSETTINGS_PATH }}
+
       - name: App Settings Variable Substitution
+        if: steps.check_appsettings.outputs.exists == 'true'
         uses: microsoft/variable-substitution@v1
         with:
           files: ${{ env.APPSETTINGS_PATH }}
