@@ -34,9 +34,15 @@ jobs:
     steps:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
+ 
+      - name: Check for APPSETTINGS existance
+        id: check_appsettings
+        uses: thebinaryfelix/check-file-existence-action@v1
+        with:
+          files: ${{ env.APPSETTINGS_PATH }}
 
       - name: App Settings Variable Substitution
-        if: ${{ hashFiles(${{ env.APPSETTINGS_PATH }}) != '' }}
+        if: steps.check_appsettings.outputs.exists == 'true'
         uses: microsoft/variable-substitution@v1
         with:
           files: ${{ env.APPSETTINGS_PATH }}
