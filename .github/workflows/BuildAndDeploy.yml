@@ -20,7 +20,6 @@ env:
   AZURE_CONTAINER_REGISTRY: "warshipregistry"
   CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
   DOCKER_PATH: "./Dockerfile"
-  APPSETTINGS_PATH: "./appsettings.json"
   CLUSTER_NAME: "aks"
 
 jobs:
@@ -35,14 +34,7 @@ jobs:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
  
-     # - name: Check for APPSETTINGS existance
-      #  id: check_appsettings
-       # uses: andstor/file-existence-action@v1
-        #with:
-         # files: ${{ env.APPSETTINGS_PATH }}
-
       - name: App Settings Variable Substitution
-        #if: steps.check_appsettings.outputs.exists == 'true'
         if: ${{ hashFiles('./appsettings.json') != '' }}
         uses: microsoft/variable-substitution@v1
         with:
