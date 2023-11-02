@@ -37,7 +37,7 @@ jobs:
 
       - name: Check for APPSETTINGS existance
         id: check_appsettings
-        uses: thebinaryfelix/check-file-existence-action@v1
+        uses: andstor/file-existence-action@v1
         with:
           files: ${{ env.APPSETTINGS_PATH }}
 
