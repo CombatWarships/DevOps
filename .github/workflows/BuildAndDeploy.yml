@@ -38,7 +38,7 @@ jobs:
         id: check_appsettings
         uses: andstor/file-existence-action@v1
         with:
-          files: ./appsettings.json
+          files: "./appsettings.json"
 
       - name: App Settings Variable Substitution
         if: steps.check_appsettings.outputs.exists == 'true'
