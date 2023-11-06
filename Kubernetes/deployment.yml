@@ -24,11 +24,11 @@ spec:
              - containerPort: 443
                # protocol: TCP
            env:
-           - name: ConnectionStrings.DBConnection
+           - name: ConnectionStrings__DBConnection
              valueFrom:
-             secretKeyRef:
-               name: warshipdatabase
-               key: connectionstring
+               secretKeyRef:
+                 name: warshipdatabase
+                 key: connectionstring
 #             - name: ASPNETCORE_URLS
 #               value: http://+:80
 #             - name: WebApiBaseAddress
