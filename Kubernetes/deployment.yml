@@ -27,7 +27,7 @@ spec:
            - name: ConnectionStrings.DBConnection
              valueFrom:
              secretKeyRef:
-               name: warship_database
+               name: warshipdatabase
                key: connectionstring
 #             - name: ASPNETCORE_URLS
 #               value: http://+:80
