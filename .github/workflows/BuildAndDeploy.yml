@@ -3,10 +3,7 @@ on:
     inputs:
       CONTAINER_NAME:
         required: true
-        type: string        
-      HasAppSettings:
-        required: true
-        type: boolean
+        type: string
     secrets:
       DBConnection:
         required: true
@@ -37,14 +34,6 @@ jobs:
     steps:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
-
-   #   - name: App Settings Variable Substitution
-   #     if: ${{ inputs.HasAppSettings == true }}
-   #     uses: microsoft/variable-substitution@v1
-   #     with:
-   #       files: ${{ env.APPSETTINGS_PATH }}
-   #     env:
-   #       ConnectionStrings.AppInsights: ${{secrets.APP_INSIGHTS}}
           
       # Logs in with your Azure credentials
       - name: Azure login
@@ -59,20 +48,20 @@ jobs:
         run: |
           az acr build -f ${{env.DOCKER_PATH}} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
 
-  Deploy-to-AKS:
+  Production-Deploy:
     permissions:
       actions: read
       contents: read
       id-token: write
     runs-on: ubuntu-latest
+    environment: production
     if: github.ref == 'refs/heads/master'
     needs: [BuildImage]    
     env:
       RESOURCE_GROUP: "aks"
     steps:
-    
       # Checks out the repository this file is in
-      - uses: actions/checkout@v4
+      #- uses: actions/checkout@v4
 
       - name: Checkout Kubernetes files
         uses: actions/checkout@v4
@@ -102,6 +91,7 @@ jobs:
           tokenPrefix: __
           tokenSuffix: __
         env:
+          NAMESPACE: ${{ env.NAMESPACE }}
           IMAGE_NAME: ${{ env.CONTAINER_NAME }}
           IMAGE_TAG: ${{ github.sha }}
           DATABASE: ${{ secrets.DBConnection }}
