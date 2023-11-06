@@ -91,7 +91,7 @@ jobs:
           tokenPrefix: __
           tokenSuffix: __
         env:
-          NAMESPACE: ${{ env.NAMESPACE }}
+          NAMESPACE: ${{ vars.NAMESPACE }}
           IMAGE_NAME: ${{ env.CONTAINER_NAME }}
           IMAGE_TAG: ${{ github.sha }}
           DATABASE: ${{ secrets.DBConnection }}
