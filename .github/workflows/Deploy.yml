@@ -85,10 +85,10 @@ jobs:
           action: deploy
           namespace: ${{ vars.NAMESPACE }}
           manifests: |
+            DevOps/Kubernetes/namespace.yml
+            DevOps/Kubernetes/secrets.yml
             DevOps/Kubernetes/deployment.yml
             DevOps/Kubernetes/service.yml
-            DevOps/Kubernetes/secrets.yml
-            DevOps/Kubernetes/namespace.yml
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }}
 
