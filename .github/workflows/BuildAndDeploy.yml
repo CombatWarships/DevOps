@@ -55,7 +55,7 @@ jobs:
       id-token: write  
     uses: CombatWarships/DevOps/.github/workflows/Deploy.yml@main
     with:
-      environment: Production
+      ENVIRONMENT: Production
       CONTAINER_NAME: warship-import
     secrets: 
       DBConnection: none    
