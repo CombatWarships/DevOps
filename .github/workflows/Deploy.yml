@@ -32,7 +32,7 @@ jobs:
       contents: read
       id-token: write
     runs-on: ubuntu-latest
-    environment: ${{ ENVIRONMENT }}
+    environment: ${{ inputs.ENVIRONMENT }}
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout Kubernetes files
@@ -64,7 +64,7 @@ jobs:
           tokenSuffix: __
         env:
           NAMESPACE: ${{ vars.NAMESPACE }}
-          IMAGE_NAME: ${{ env.CONTAINER_NAME }}
+          IMAGE_NAME: ${{ inputs.CONTAINER_NAME }}
           IMAGE_TAG: ${{ github.sha }}
           DATABASE: ${{ secrets.DBConnection }}
           APPINSIGHTS: ${{ secrets.APP_INSIGHTS }}
