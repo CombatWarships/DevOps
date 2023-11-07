@@ -1,0 +1,91 @@
+on:
+  workflow_call:
+    inputs:
+      CONTAINER_NAME:
+        required: true
+        type: string
+    secrets:
+      DBConnection:
+        required: true
+      APP_INSIGHTS:
+        required: true
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+
+env:
+  AZURE_CONTAINER_REGISTRY: "warshipregistry"
+  DOCKER_PATH: "./Dockerfile"
+  CLUSTER_NAME: "aks"
+  RESOURCE_GROUP: "aks"
+
+jobs:
+   Production-Deploy:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout Kubernetes files
+        uses: actions/checkout@v4
+        with:
+          repository: CombatWarships/DevOps
+          path: DevOps
+      
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+      # Use kubelogin to configure your kubeconfig for Azure auth
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.0.25'
+
+      # Update K8 variables with information from this CI.
+      - name: Update K8 variables 
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["DevOps/Kubernetes/*.yml"]'
+          tokenPrefix: __
+          tokenSuffix: __
+        env:
+          NAMESPACE: ${{ vars.NAMESPACE }}
+          IMAGE_NAME: ${{ env.CONTAINER_NAME }}
+          IMAGE_TAG: ${{ github.sha }}
+          DATABASE: ${{ secrets.DBConnection }}
+          APPINSIGHTS: ${{ secrets.APP_INSIGHTS }}
+
+      # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
+      - name: Get K8s context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          admin: 'false'
+          use-kubelogin: 'true'
+
+      # Deploys application based on manifest files from previous step
+      - name: Deploy application
+        uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          namespace: ${{ vars.NAMESPACE }}
+          manifests: |
+            DevOps/Kubernetes/deployment.yml
+            DevOps/Kubernetes/service.yml
+            DevOps/Kubernetes/secrets.yml
+            DevOps/Kubernetes/namespace.yml
+          images: |
+            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+
+          
