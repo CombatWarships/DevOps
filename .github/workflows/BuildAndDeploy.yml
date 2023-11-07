@@ -47,6 +47,23 @@ jobs:
         run: |
           az acr build -f ${{env.DOCKER_PATH}} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
 
+  DevelopmentDeploy: 
+    permissions:
+      actions: read
+      contents: read
+      id-token: write  
+    needs: BuildImage
+    uses: CombatWarships/DevOps/.github/workflows/Deploy.yml@main
+    with:
+      ENVIRONMENT: Development
+      CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
+    secrets: 
+      DBConnection: none    
+      APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
+      AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
+      AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+      AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+
   ProductionDeploy: 
     permissions:
       actions: read
