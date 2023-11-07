@@ -18,7 +18,6 @@ on:
 
 env:
   AZURE_CONTAINER_REGISTRY: "warshipregistry"
-  CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
   DOCKER_PATH: "./Dockerfile"
   APPSETTINGS_PATH: "./appsettings.json"
   CLUSTER_NAME: "aks"
@@ -46,7 +45,7 @@ jobs:
       # Builds and pushes an image up to your Azure Container Registry
       - name: Build and push image to ACR
         run: |
-          az acr build -f ${{env.DOCKER_PATH}} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+          az acr build -f ${{env.DOCKER_PATH}} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
 
   ProductionDeploy: 
     permissions:
@@ -56,7 +55,7 @@ jobs:
     uses: CombatWarships/DevOps/.github/workflows/Deploy.yml@main
     with:
       ENVIRONMENT: Production
-      CONTAINER_NAME: warship-import
+      CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
     secrets: 
       DBConnection: none    
       APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
