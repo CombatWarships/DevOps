@@ -23,7 +23,7 @@ env:
   RESOURCE_GROUP: "aks"
 
 jobs:
-   Production-Deploy:
+   Deploy:
     permissions:
       actions: read
       contents: read
