@@ -69,7 +69,7 @@ jobs:
       actions: read
       contents: read
       id-token: write  
-    needs: BuildImage
+    needs: DevelopmentDeploy
     uses: CombatWarships/DevOps/.github/workflows/Deploy.yml@main
     with:
       ENVIRONMENT: Production
