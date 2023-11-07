@@ -35,6 +35,11 @@ spec:
                secretKeyRef:
                  name: productionsecrets
                  key: appinsights
+           - name: ConnectionStrings__WarshipsService
+             valueFrom:
+               secretKeyRef:
+                 name: productionsecrets
+                 key: warshipsservice             
 #             - name: ASPNETCORE_URLS
 #               value: http://+:80
 #             - name: WebApiBaseAddress
