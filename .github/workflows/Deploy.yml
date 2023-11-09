@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       ROUTE_BASE_INGRESS:
-        required: true
+        required: false
         type: boolean
         default: false
     secrets:
