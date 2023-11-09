@@ -7,8 +7,8 @@ spec:
   ingressClassName: nginx
   defaultBackend:
     service:
-      name: asdf
-      port: __IMAGE_NAME__
+      name: __IMAGE_NAME__
+      port: 
         number: 80
 #  rules:
  #   http:
