@@ -7,6 +7,10 @@ on:
       ENVIRONMENT:
         required: true
         type: string
+      ROUTE_BASE_INGRESS:
+        required: true
+        type: boolean
+        default: false
     secrets:
       DBConnection:
         required: true
@@ -90,6 +94,7 @@ jobs:
             DevOps/Kubernetes/deployment.yml
             DevOps/Kubernetes/service.yml
             DevOps/Kubernetes/ingress.yml
+            ${{ inputs.ROUTE_BASE_INGRESS == 'true' && 'DevOps/Kubernetes/baseingress.yml' || '' }}
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }}
 
