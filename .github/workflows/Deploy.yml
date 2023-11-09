@@ -28,7 +28,6 @@ env:
   DOCKER_PATH: "./Dockerfile"
   CLUSTER_NAME: "aks"
   RESOURCE_GROUP: "aks"
-  RouteBaseIngressYml: "NOPE"
 
 jobs:
    Deploy:
@@ -82,10 +81,6 @@ jobs:
           cluster-name: ${{ env.CLUSTER_NAME }}
           admin: 'false'
           use-kubelogin: 'true'
-
-      - name: Set Default INGRESS for this service
-        if: ${{ inputs.ROUTE_BASE_INGRESS == 'true' }}
-        run: env.RouteBaseIngressYml = "DevOps/Kubernetes/baseingress.yml"
    
       # Deploys application based on manifest files from previous step
       - name: Deploy application
@@ -100,7 +95,7 @@ jobs:
             DevOps/Kubernetes/service.yml
             DevOps/Kubernetes/ingress.yml
             env.RouteBaseIngressYml
-            ${{ env.RouteBaseIngressYml }}
+            ${{ inputs.ROUTE_BASE_INGRESS == 'true' && "DevOps/Kubernetes/baseingress.yml" || "NOPE" }}
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }}
 
