@@ -1,22 +1,21 @@
-#apiVersion: networking.k8s.io/v1
-#kind: Ingress
-#metadata:
-#  name: default-ingress
- # namespace: __NAMESPACE__
-#spec: 
-#  ingressClassName: nginx
- # defaultBackend:
-  #  service:
-   #   name: __IMAGE_NAME__
-    #  port: 
-     #   number: 80
-#  rules:
- #   http:
-  #    paths:
-   #     - pathType: Prefix
-    #      path: "/"
-     #     backend:
-      #      service:
-       #       name: __IMAGE_NAME__
-        #      port:
-         #       number: 80
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: __IMAGE_NAME__-ingress
+  namespace: __NAMESPACE__
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /__IMAGE_NAME__(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: __IMAGE_NAME__
+            port:
+              number: 80
