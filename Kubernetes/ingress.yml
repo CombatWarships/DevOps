@@ -5,13 +5,18 @@ metadata:
   namespace: __NAMESPACE__
 spec: 
   ingressClassName: nginx
-  rules:
-    http:
-      paths:
-        - pathType: Prefix
-          path: "/"
-          backend:
-            service:
-              name: __IMAGE_NAME__
-              port:
-                number: 80
+  defaultBackend:
+    service:
+      name: asdf
+      port: __IMAGE_NAME__
+        number: 80
+#  rules:
+ #   http:
+  #    paths:
+   #     - pathType: Prefix
+    #      path: "/"
+     #     backend:
+      #      service:
+       #       name: __IMAGE_NAME__
+        #      port:
+         #       number: 80
