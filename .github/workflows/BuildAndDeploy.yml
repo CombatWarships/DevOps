@@ -4,6 +4,10 @@ on:
       CONTAINER_NAME:
         required: true
         type: string
+      ROUTE_BASE_INGRESS:
+        required: false
+        type: boolean
+        default: false
     secrets:
       DBConnection:
         required: true
@@ -57,6 +61,7 @@ jobs:
     with:
       ENVIRONMENT: Development
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
+      ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
     secrets: 
       DBConnection: none    
       APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
@@ -74,6 +79,7 @@ jobs:
     with:
       ENVIRONMENT: Production
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
+      ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
     secrets: 
       DBConnection: none    
       APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
