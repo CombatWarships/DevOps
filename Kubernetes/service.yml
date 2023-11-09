@@ -7,15 +7,8 @@ metadata:
     app: __IMAGE_NAME__
     service: __IMAGE_NAME__
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-    - name: http
-      port: 80
-      targetPort: 80
-      protocol: TCP
-    - name: https
-      port: 443
-      targetPort: 443
-      protocol: TCP
+  - port: 80
   selector:
     service: __IMAGE_NAME__
