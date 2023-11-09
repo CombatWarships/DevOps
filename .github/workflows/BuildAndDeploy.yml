@@ -63,7 +63,7 @@ jobs:
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
       ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
     secrets: 
-      DBConnection: none    
+      DBConnection: ${{secrets.DBConnection}}      
       APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
       AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
       AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
@@ -81,7 +81,7 @@ jobs:
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
       ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
     secrets: 
-      DBConnection: none    
+      DBConnection: ${{secrets.DBConnection}}    
       APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
       AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
       AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
