@@ -7,7 +7,7 @@ spec:
   ingressClassName: nginx
   defaultBackend:
     service:
-      name: __IMAGE_NAME__/WikiResearch
+      name: __IMAGE_NAME__
       port: 
         number: 80
 #  rules:
