@@ -9,7 +9,7 @@ on:
         type: string
       ROUTE_BASE_INGRESS:
         required: true
-        type: boolean
+        type: string
     secrets:
       DBConnection:
         required: true
