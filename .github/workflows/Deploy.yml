@@ -92,8 +92,7 @@ jobs:
             DevOps/Kubernetes/secrets.yml
             DevOps/Kubernetes/deployment.yml
             DevOps/Kubernetes/service.yml
-            DevOps/Kubernetes/ingress.yml
-            ${{ inputs.ROUTE_BASE_INGRESS == 'true' && 'DevOps/Kubernetes/rootIngress.yml' || '' }}
+            ${{ inputs.ROUTE_BASE_INGRESS == 'true' && 'DevOps/Kubernetes/rootIngress.yml' || 'DevOps/Kubernetes/ingress.yml' }}
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }}
 
