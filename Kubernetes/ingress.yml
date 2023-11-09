@@ -1,15 +1,15 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: default-ingress
-  namespace: __NAMESPACE__
-spec: 
-  ingressClassName: nginx
-  defaultBackend:
-    service:
-      name: __IMAGE_NAME__
-      port: 
-        number: 80
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: default-ingress
+ # namespace: __NAMESPACE__
+#spec: 
+#  ingressClassName: nginx
+ # defaultBackend:
+  #  service:
+   #   name: __IMAGE_NAME__
+    #  port: 
+     #   number: 80
 #  rules:
  #   http:
   #    paths:
