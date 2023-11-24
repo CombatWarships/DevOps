@@ -59,7 +59,6 @@ jobs:
           tokenSuffix: __
         env:
           USERNAME: CombatWarships
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Builds and pushes an image up to your Azure Container Registry
       - name: Build and push image to ACR
