@@ -23,6 +23,8 @@ on:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
+      PACKAGE_READ:
+        required: true  
 
 env:
   AZURE_CONTAINER_REGISTRY: "warshipregistry"
@@ -51,7 +53,7 @@ jobs:
           tokenSuffix: __
         env:
           USERNAME: JustinKScott
-          TOKEN: ${{ secrets.PackageRead }}
+          TOKEN: ${{ secrets.PACKAGE_READ }}
 
       # Logs in with your Azure credentials
       - name: Azure login ${{ inputs.ROUTE_BASE_INGRESS }}
