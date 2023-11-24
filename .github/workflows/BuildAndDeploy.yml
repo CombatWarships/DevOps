@@ -50,9 +50,8 @@ jobs:
           tokenPrefix: __
           tokenSuffix: __
         env:
-          USERNAME: CombatWarships
+          USERNAME: JustinKScott
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
       # Logs in with your Azure credentials
       - name: Azure login ${{ inputs.ROUTE_BASE_INGRESS }}
