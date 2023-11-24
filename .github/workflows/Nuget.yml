@@ -1,9 +1,12 @@
-name: CI
-
 on:
-  workflow_dispatch:
-  push:
-    branches: [ master ]
+  workflow_call:
+    inputs:
+      CSPROJ_PATH:
+        required: true
+        type: string
+      RELEASE_DIR:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -22,23 +25,24 @@ jobs:
       uses: gittools/actions/gitversion/setup@v0.9.7
       with:
         versionSpec: 5.x
+        
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0.9.7
       id: gitversion # step id used as reference for output values
+      
     - name: Display GitVersion outputs
       run: |
         echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
- 
-       
+        
     - name: Build and Pack NuGet package
-      run: dotnet pack ServiceBus.Core.csproj -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
+      run: dotnet pack ${{ inputs.CSPROJ_PATH }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
       
     - name: Upload NuGet package to GitHub
       uses: actions/upload-artifact@v2
       with:
         name: nugetPackage
-        path: bin/Release/ 
+        path: ${{ inputs.RELEASE_DIR }} 
         
   release:
     runs-on: ubuntu-latest    
