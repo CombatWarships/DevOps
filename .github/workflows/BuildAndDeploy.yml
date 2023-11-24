@@ -51,7 +51,7 @@ jobs:
           tokenSuffix: __
         env:
           USERNAME: JustinKScott
-          TOKEN: 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
+          TOKEN: ${{ secrets.PackageRead }}
 
       # Logs in with your Azure credentials
       - name: Azure login ${{ inputs.ROUTE_BASE_INGRESS }}
