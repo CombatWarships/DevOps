@@ -7,7 +7,11 @@ on:
       ROUTE_BASE_INGRESS:
         required: false
         type: string
-        default: 'false'
+        default: 'false'       
+      DOCKER_PATH:
+        required: false
+        type: string
+        default: "./Dockerfile"
     secrets:
       DBConnection:
         required: true
@@ -22,8 +26,6 @@ on:
 
 env:
   AZURE_CONTAINER_REGISTRY: "warshipregistry"
-  DOCKER_PATH: "./Dockerfile"
-  APPSETTINGS_PATH: "./appsettings.json"
   CLUSTER_NAME: "aks"
 
 jobs:
@@ -45,11 +47,14 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+     
+      - name: Prep Package Source
+        run: dotnet nuget add source --username CombatWarships --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CombatWarships/index.json"
 
       # Builds and pushes an image up to your Azure Container Registry
       - name: Build and push image to ACR
         run: |
-          az acr build -f ${{env.DOCKER_PATH}} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+          az acr build -f ${{inputs.DOCKER_PATH}} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
 
   DevelopmentDeploy: 
     permissions:
