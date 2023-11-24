@@ -52,7 +52,7 @@ jobs:
   #      run: dotnet nuget add source --username CombatWarships --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CombatWarships/index.json"
 
       - name: Update DOCKER variables 
-        uses: cschleiden/replace-tokens@v1
+        uses: cschleiden/replace-tokens@v1.2
         with:
           files: '[${{inputs.DOCKER_PATH}}]'
           tokenPrefix: __
