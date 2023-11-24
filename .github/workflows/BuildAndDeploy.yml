@@ -51,6 +51,16 @@ jobs:
   #    - name: Prep Package Source
   #      run: dotnet nuget add source --username CombatWarships --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CombatWarships/index.json"
 
+      - name: Update DOCKER variables 
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '[${{inputs.DOCKER_PATH}}]'
+          tokenPrefix: __
+          tokenSuffix: __
+        env:
+          USERNAME: CombatWarships
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Builds and pushes an image up to your Azure Container Registry
       - name: Build and push image to ACR
         run: |
