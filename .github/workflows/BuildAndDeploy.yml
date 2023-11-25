@@ -48,7 +48,7 @@ jobs:
       - name: Update DOCKER variables 
         uses: cschleiden/replace-tokens@v1.2
         with:
-          files: '["./Warships/Dockerfile"]'
+          files: '["./Dockerfile"]'
           tokenPrefix: __
           tokenSuffix: __
         env:
