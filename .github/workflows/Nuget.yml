@@ -36,7 +36,7 @@ jobs:
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
           
     - name: Prep Package Source
-      run: dotnet nuget add source --username CombatWarships --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CombatWarships/index.json"
+      run: dotnet nuget add source --username JustinKScott --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CombatWarships/index.json"
 
     - name: Build and Pack NuGet package
       run: dotnet pack ${{ inputs.CSPROJ_PATH }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
