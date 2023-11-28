@@ -10,9 +10,6 @@ on:
       ROUTE_BASE_INGRESS:
         required: true
         type: string
-      KEY_VAULT_NAME:
-        required: false
-        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -64,7 +61,7 @@ jobs:
           tokenPrefix: __
           tokenSuffix: __
         env:
-          KEY_VAULT_NAME: ${{ inputs.KEY_VAULT_NAME }}
+          KEY_VAULT_NAME: ${{ vars.KEYVAULTNAME }}
           NAMESPACE: ${{ vars.NAMESPACE }}
           IMAGE_NAME: ${{ inputs.CONTAINER_NAME }}
           IMAGE_TAG: ${{ github.sha }}
