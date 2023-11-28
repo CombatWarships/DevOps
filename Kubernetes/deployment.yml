@@ -25,16 +25,8 @@ spec:
              - containerPort: 443
                # protocol: TCP
            env:
-           - name: ConnectionStrings__DBConnection
-             valueFrom:
-               secretKeyRef:
-                 name: productionsecrets
-                 key: dbconnection
-           - name: ConnectionStrings__AppInsights
-             valueFrom:
-               secretKeyRef:
-                 name: productionsecrets
-                 key: appinsights          
+           - name: KeyVaultName
+             value: __KeyVaultName__       
 #             - name: ASPNETCORE_URLS
 #               value: http://+:80
 #             - name: WebApiBaseAddress
