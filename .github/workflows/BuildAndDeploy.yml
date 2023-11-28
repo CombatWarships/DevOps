@@ -13,10 +13,6 @@ on:
         type: string
         default: "./Dockerfile"
     secrets:
-      DBConnection:
-        required: true
-      APP_INSIGHTS:
-        required: true
       AZURE_CLIENT_ID:
         required: true
       AZURE_TENANT_ID:
@@ -24,7 +20,7 @@ on:
       AZURE_SUBSCRIPTION_ID:
         required: true
       PACKAGE_READ:
-        required: true  
+        required: true
 
 env:
   AZURE_CONTAINER_REGISTRY: "warshipregistry"
@@ -56,7 +52,7 @@ jobs:
           TOKEN: ${{ secrets.PACKAGE_READ }}
 
       # Logs in with your Azure credentials
-      - name: Azure login ${{ inputs.ROUTE_BASE_INGRESS }}
+      - name: Azure login 
         uses: azure/login@v1.4.6
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -80,8 +76,6 @@ jobs:
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
       ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
     secrets: 
-      DBConnection: ${{secrets.DBConnection}}      
-      APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
       AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
       AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
       AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
@@ -98,8 +92,6 @@ jobs:
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
       ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
     secrets: 
-      DBConnection: ${{secrets.DBConnection}}    
-      APP_INSIGHTS: ${{secrets.APP_INSIGHTS}}
       AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
       AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
       AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
