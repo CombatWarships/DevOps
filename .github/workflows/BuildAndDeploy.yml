@@ -11,7 +11,15 @@ on:
       DOCKER_PATH:
         required: false
         type: string
-        default: "./Dockerfile"
+        default: "./Dockerfile"        
+      DEV_KEY_VAULT_NAME:
+        required: false
+        type: string
+        default: ""
+      PROD_KEY_VAULT_NAME:
+        required: false
+        type: string
+        default: ""
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -75,6 +83,7 @@ jobs:
       ENVIRONMENT: Development
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
       ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
+      KEY_VAULT_NAME: ${{ DEV_KEY_VAULT_NAME }}
     secrets: 
       AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
       AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
@@ -90,7 +99,8 @@ jobs:
     with:
       ENVIRONMENT: Production
       CONTAINER_NAME: ${{ inputs.CONTAINER_NAME }}
-      ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}
+      ROUTE_BASE_INGRESS: ${{ inputs.ROUTE_BASE_INGRESS }}      
+      KEY_VAULT_NAME: ${{ PROD_KEY_VAULT_NAME }}
     secrets: 
       AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}  
       AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
